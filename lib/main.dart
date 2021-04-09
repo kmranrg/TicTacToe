@@ -5,109 +5,211 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class HomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomePageState extends State<HomePage> {
+  bool ohTurn = true; // the first player is `o`
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
+
+  var myTextStyle = TextStyle(color: Colors.white, fontSize: 30);
+  int ohScore = 0;
+  int exScore = 0;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      backgroundColor: Colors.grey[800],
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Player O',
+                          style: myTextStyle,
+                        ),
+                        Text(
+                          ohScore.toString(),
+                          style: myTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Player X',
+                          style: myTextStyle,
+                        ),
+                        Text(
+                          exScore.toString(),
+                          style: myTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 3,
+            child: GridView.builder(
+                itemCount: 9,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      _tapped(index);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey[700])),
+                      child: Center(
+                        child: Text(
+                          displayExOh[index],
+                          style: TextStyle(color: Colors.white, fontSize: 40),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _tapped(int index) {
+    setState(() {
+      if (ohTurn && displayExOh[index] == '') {
+        displayExOh[index] = 'o';
+      } else if (!ohTurn && displayExOh[index] == '') {
+        displayExOh[index] = 'x';
+      }
+
+      ohTurn = !ohTurn;
+      _checkWinner();
+    });
+  }
+
+  void _checkWinner() {
+    // checks 1st row
+    if (displayExOh[0] == displayExOh[1] &&
+        displayExOh[0] == displayExOh[2] &&
+        displayExOh[0] != '') {
+      _showWinDialog(displayExOh[0]);
+    }
+
+    // checks 2nd row
+    if (displayExOh[3] == displayExOh[4] &&
+        displayExOh[3] == displayExOh[5] &&
+        displayExOh[3] != '') {
+      _showWinDialog(displayExOh[3]);
+    }
+
+    // checks 3rd row
+    if (displayExOh[6] == displayExOh[7] &&
+        displayExOh[6] == displayExOh[8] &&
+        displayExOh[6] != '') {
+      _showWinDialog(displayExOh[6]);
+    }
+
+    // checks 1st column
+    if (displayExOh[0] == displayExOh[3] &&
+        displayExOh[0] == displayExOh[6] &&
+        displayExOh[0] != '') {
+      _showWinDialog(displayExOh[0]);
+    }
+
+    // checks 2nd column
+    if (displayExOh[1] == displayExOh[4] &&
+        displayExOh[1] == displayExOh[7] &&
+        displayExOh[1] != '') {
+      _showWinDialog(displayExOh[1]);
+    }
+
+    // checks 3rd column
+    if (displayExOh[2] == displayExOh[5] &&
+        displayExOh[2] == displayExOh[8] &&
+        displayExOh[2] != '') {
+      _showWinDialog(displayExOh[2]);
+    }
+
+    // checks diagonal
+    if (displayExOh[6] == displayExOh[4] &&
+        displayExOh[6] == displayExOh[2] &&
+        displayExOh[6] != '') {
+      _showWinDialog(displayExOh[6]);
+    }
+
+    // checks diagonal
+    if (displayExOh[0] == displayExOh[4] &&
+        displayExOh[0] == displayExOh[8] &&
+        displayExOh[0] != '') {
+      _showWinDialog(displayExOh[0]);
+    }
+  }
+
+  void _showWinDialog(String winner) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Player ${winner.toUpperCase()} has won the game!!"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  _clearBoard();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Play Again!'),
+              ),
+            ],
+          );
+        });
+    if (winner == 'o') {
+      ohScore += 1;
+    } else if (winner == 'x') {
+      exScore += 1;
+    }
+  }
+
+  void _clearBoard() {
+
+    setState(() {
+      for(int i = 0; i < 9; i++) {
+        displayExOh[i] = '';
+      }
+    });
+
   }
 }
