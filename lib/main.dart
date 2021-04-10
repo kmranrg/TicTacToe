@@ -1,12 +1,12 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'homepage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   SystemChrome.setEnabledSystemUIOverlays([]);
   runApp(MyApp());
 }
@@ -14,7 +14,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: IntroScreen(),
@@ -29,10 +28,18 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen>
     with SingleTickerProviderStateMixin {
-  static var myNewFont = GoogleFonts.pressStart2p(
-      textStyle: TextStyle(color: Colors.black, letterSpacing: 3));
-  static var myNewFontWhite = GoogleFonts.pressStart2p(
-      textStyle: TextStyle(color: Colors.white, letterSpacing: 3));
+  static var myNewFont = TextStyle(
+    fontSize: 12.5,
+    color: Colors.black,
+    fontFamily: 'Press Start 2P',
+    letterSpacing: 3,
+  );
+  static var myNewFontWhite = TextStyle(
+    fontSize: 19.5,
+    color: Colors.white,
+    fontFamily: 'Press Start 2P',
+    letterSpacing: 3,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +99,7 @@ class _IntroScreenState extends State<IntroScreen>
                     child: Container(
                       child: Text(
                         "DEVELOPER: KUMAR ANURAG",
-                        style: myNewFontWhite.copyWith(fontSize: 13),
+                        style: myNewFontWhite.copyWith(fontSize: 12.0),
                       ),
                     ),
                   ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,9 +23,12 @@ class _HomePageState extends State<HomePage> {
   int exScore = 0;
   int filledBoxes = 0;
 
-  static var myNewFontWhite = GoogleFonts.pressStart2p(
-      textStyle:
-          TextStyle(color: Colors.white, letterSpacing: 3, fontSize: 15));
+  static var myNewFontWhite = TextStyle(
+    fontSize: 12.5,
+    color: Colors.white,
+    fontFamily: 'Press Start 2P',
+    letterSpacing: 3,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -139,12 +141,13 @@ class _HomePageState extends State<HomePage> {
       if (ohTurn && displayExOh[index] == '') {
         displayExOh[index] = 'o';
         filledBoxes += 1;
+        ohTurn = !ohTurn;
       } else if (!ohTurn && displayExOh[index] == '') {
         displayExOh[index] = 'x';
         filledBoxes += 1;
+        ohTurn = !ohTurn;
       }
 
-      ohTurn = !ohTurn;
       _checkWinner();
     });
   }
