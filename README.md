@@ -1,6 +1,17 @@
 # TicTacToe
 <img src="https://github.com/kmranrg/TicTacToe/blob/main/app_logo/tic_toc_toe_logo.png" width="256" height="256">
+
+#### Introduction:
+
 Simple Game to have the full fun experience of Classic Tic-Tac-Toe Game.
+
+#### Features:
+
++ Completely Offline
++ Rich UI
++ Simple Design
++ Integrated Scoreboard
++ Of course, Add free
 
 ## Game ScreenShots:
 ![ss1](https://github.com/kmranrg/TicTacToe/blob/main/screenshots/ss1.png) ![ss2](https://github.com/kmranrg/TicTacToe/blob/main/screenshots/ss2.png)
