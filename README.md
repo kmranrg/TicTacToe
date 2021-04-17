@@ -1,5 +1,5 @@
 # TicTacToe
-<img src="https://github.com/kmranrg/TicTacToe/blob/main/app_logo/tic_toc_toe_logo.png" width="256" height="256"> <img src="https://github.com/kmranrg/TicTacToe/blob/main/app_logo/google_play_store.png" width="323" height="125">
+<img src="https://github.com/kmranrg/TicTacToe/blob/main/app_logo/tic_toc_toe_logo.png" width="256" height="256"> <a href="https://play.google.com/store/apps/details?id=com.kmranrg.tictactoe"><img src="https://github.com/kmranrg/TicTacToe/blob/main/app_logo/google_play_store.png" width="323" height="125"></a>
 
 #### Introduction:
 
