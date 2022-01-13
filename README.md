@@ -18,7 +18,7 @@ Simple Game to have the full fun experience of Classic Tic-Tac-Toe Game.
 ![ss3](https://github.com/kmranrg/TicTacToe/blob/main/screenshots/ss3.png) ![ss4](https://github.com/kmranrg/TicTacToe/blob/main/screenshots/ss4.png)
 
 ## YouTube Image Link:
-[![video](https://img.youtube.com/vi/1tO8aZsSEBc/0.jpg)](https://youtu.be/1tO8aZsSEBc)
+[![video](https://img.youtube.com/vi/zriKiHLEDWE/0.jpg)](https://youtu.be/zriKiHLEDWE)
 
 ## Getting Started with Flutter:
 
